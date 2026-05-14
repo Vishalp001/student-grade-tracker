@@ -1,38 +1,177 @@
 .App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.appHeader {
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.appHeader h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+  font-weight: 300;
+}
+.appHeader p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.appMain {
+  margin-top: 2rem;
+}
+
+.studentSection h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.studentsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.studentCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #ddd;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.studentCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0, 0.15);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.studentCard.passed {
+  border-left-color: #4caf50;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.studentCard.failed {
+  border-left-color: #f44336;
+}
+.studentInfoHeader {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  gap: 10px;
+}
+.studentInfo h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.3rem;
+  font-size: 500;
+}
+
+.studentInfo p {
+  margin: 0.5rem 0;
+  color: #666;
+  line-height: 1.4;
+}
+
+.studentInfo strong {
+  color: #333;
+}
+.studentStatus {
+  margin-top: 1rem;
+  text-align: center;
+}
+.status {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.statusPassed {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+.statusFailed {
+  background: #fffbee;
+  color: #c62828;
+}
+
+.addStudentSection {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-sizing: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+.addStudentSection h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.8rem;
+}
+.addStudentForm {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+.formGroup input,
+.formGroup select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-colir 0.2s ease;
+}
+.formGroup input:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
-
-.App-link {
-  color: #61dafb;
+.submitBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.submitBtn:active {
+  transform: translateY(0);
+}
+.noStudents {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-style: italic;
+}
+.noStudents p {
+  font-size: 1.1rem;
 }
