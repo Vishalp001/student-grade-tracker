@@ -27,7 +27,31 @@
 .appMain {
   margin-top: 2rem;
 }
-
+.sSHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.searchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-radius: 26px;
+  height: 40px;
+  background: #fff;
+  border: 2px solid #667eea;
+  padding: 20px;
+}
+.searchContainer input {
+  width: 100%;
+  overflow: auto;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
 .studentSection h2 {
   color: #333;
   margin-bottom: 1.5rem;
@@ -53,6 +77,13 @@
 .studentCard:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0, 0.15);
+}
+
+.deleteIcon {
+  cursor: pointer;
+}
+.deleteIcon svg:hover {
+  color: #f44336;
 }
 
 .studentCard.passed {

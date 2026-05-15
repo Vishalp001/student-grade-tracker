@@ -1,5 +1,7 @@
 import React from 'react'
 import './App.css'
+import { MdDelete } from 'react-icons/md'
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -7,33 +9,53 @@ class App extends React.Component {
       students: [
         {
           id: 1,
-          name: 'Alis Jonson',
+          name: 'John Doe',
           subject: 'Mathematics',
           grade: 92,
           passed: true,
         },
         {
           id: 2,
-          name: 'John Leo',
-          subject: 'Chemistry',
-          grade: 65,
-          passed: true,
+          name: 'Alice Smith',
+          subject: 'Physics',
+          grade: 48,
+          passed: false,
         },
         {
           id: 3,
-          name: 'David Markend',
-          subject: 'Biology',
-          grade: 45,
-          passed: false,
+          name: 'David Johnson',
+          subject: 'Chemistry',
+          grade: 76,
+          passed: true,
         },
-      ],
-      newStudent: [
         {
-          name: '',
-          subject: '',
-          grade: '',
+          id: 4,
+          name: 'Neem Khond',
+          subject: 'Chemistry',
+          grade: 76,
+          passed: true,
+        },
+        {
+          id: 5,
+          name: 'Nilesh Prasad',
+          subject: 'Chemistry',
+          grade: 76,
+          passed: true,
+        },
+        {
+          id: 6,
+          name: 'Rohit Sahurkar',
+          subject: 'Physics',
+          grade: 76,
+          passed: true,
         },
       ],
+      newStudent: {
+        name: '',
+        subject: '',
+        grade: '',
+      },
+      searchTerm: '',
     }
   }
 
@@ -80,18 +102,38 @@ class App extends React.Component {
     })
   }
 
-  renderStudentList() {
-    console.log(this.state.students)
+  handleDeleteStudent = (id) => {
+    console.log('id: ', id)
 
-    if (this.state.students.length === 0) {
+    const remainingStudent = this.state.students.filter(
+      (student) => student.id !== id,
+    )
+    console.log('remainingStudent: ', remainingStudent)
+    this.setState({
+      students: remainingStudent,
+    })
+  }
+
+  handleSearchInput = (e) => {
+    this.setState({
+      searchTerm: e.target.value,
+    })
+  }
+
+  renderStudentList() {
+    const filteredStudents = this.state.students.filter((student) =>
+      student.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()),
+    )
+
+    if (filteredStudents.length === 0) {
       return (
         <div className='noStudents'>
-          <p>No students added yet. Add your first student below!</p>
+          <p>No students found.</p>
         </div>
       )
     }
 
-    return this.state.students.map((student) => (
+    return filteredStudents?.map((student) => (
       <div
         key={student.id}
         className={`studentCard ${student.passed ? 'passed' : 'failed'}`}
@@ -99,6 +141,12 @@ class App extends React.Component {
         <div className='studentInfo'>
           <div className='studentInfoHeader'>
             <h3>{student.name}</h3>
+            <h3
+              className='deleteIcon'
+              onClick={() => this.handleDeleteStudent(student.id)}
+            >
+              <MdDelete />
+            </h3>
           </div>
           <p style={{ textTransform: 'capitalize' }}>
             <strong>Subject: </strong>
@@ -125,14 +173,24 @@ class App extends React.Component {
       <div className='App'>
         <header className='appHeader'>
           <h1>Student Grade Tracker</h1>
-          <p>Class compoent design</p>
+          <p>Class component design</p>
         </header>
 
         <div className='appMain'>
           <section className='studentSection'>
-            <h2 className='studentList'>
-              Student List ({this.state.students.length})
-            </h2>
+            <div className='sSHeader'>
+              <h2 className='studentList'>
+                Student List ( {this.state.students.length})
+              </h2>
+              <div className='searchContainer'>
+                <input
+                  type='text'
+                  value={this.state.searchTerm}
+                  placeholder='Search student...'
+                  onChange={this.handleSearchInput}
+                />
+              </div>
+            </div>
             <div className='studentsGrid'>{this.renderStudentList()}</div>
           </section>
 
@@ -160,7 +218,7 @@ class App extends React.Component {
                 <select
                   name='subject'
                   id='studentSubject'
-                  value={this.state.newStudent.student}
+                  value={this.state.newStudent.subject}
                   onChange={this.handleInputChange}
                 >
                   <option value=''>Slect a Subject</option>
