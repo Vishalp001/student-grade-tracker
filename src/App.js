@@ -6,12 +6,37 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      isDeleteModalOpen: false,
+      students: [
+        {
+          id: 1,
+          name: 'John Doe',
+          subject: 'Mathematics',
+          grade: 92,
+          passed: true,
+        },
+        {
+          id: 2,
+          name: 'Alice Smith',
+          subject: 'Physics',
+          grade: 48,
+          passed: false,
+        },
+        {
+          id: 3,
+          name: 'David Johnson',
+          subject: 'Chemistry',
+          grade: 76,
+          passed: true,
+        },
+      ],
       newStudent: {
         name: '',
         subject: '',
         grade: '',
       },
       searchTerm: '',
+      selectedStudentId: 0,
     }
   }
 
@@ -59,14 +84,12 @@ class App extends React.Component {
   }
 
   handleDeleteStudent = (id) => {
-    console.log('id: ', id)
-
     const remainingStudent = this.state.students.filter(
       (student) => student.id !== id,
     )
-    console.log('remainingStudent: ', remainingStudent)
     this.setState({
       students: remainingStudent,
+      isDeleteModalOpen: false,
     })
   }
 
@@ -76,8 +99,20 @@ class App extends React.Component {
     })
   }
 
+  openDeleteModal = (id) => {
+    this.setState({
+      isDeleteModalOpen: true,
+      selectedStudentId: id,
+    })
+  }
+  closeDeleteModal = () => {
+    this.setState({
+      isDeleteModalOpen: false,
+    })
+  }
+
   renderStudentList(filteredStudents) {
-    if (this.state.students.length === 0) {
+    if (this.state.students?.length === 0) {
       return (
         <div className='noStudents'>
           <p>No students found. Add Student</p>
@@ -85,7 +120,7 @@ class App extends React.Component {
       )
     }
 
-    if (filteredStudents.length === 0) {
+    if (filteredStudents?.length === 0) {
       return (
         <div className='noStudents'>
           <p>No students found.</p>
@@ -103,7 +138,7 @@ class App extends React.Component {
             <h3>{student.name}</h3>
             <h3
               className='deleteIcon'
-              onClick={() => this.handleDeleteStudent(student.id)}
+              onClick={() => this.openDeleteModal(student.id)}
             >
               <MdDelete />
             </h3>
@@ -129,11 +164,35 @@ class App extends React.Component {
   }
 
   render() {
-    const filteredStudents = this.state.students.filter((student) =>
+    const filteredStudents = this.state.students?.filter((student) =>
       student.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()),
     )
     return (
       <div className='App'>
+        {this.state.isDeleteModalOpen && (
+          <div className='modalOverlay'>
+            <div className='modal'>
+              <h2>Delete Student</h2>
+              <p>
+                Are you sure you want to delete this student? This action cannot
+                be undone.
+              </p>
+
+              <div className='modalActions'>
+                <button onClick={this.closeDeleteModal}>Cancel</button>
+
+                <button
+                  onClick={() =>
+                    this.handleDeleteStudent(this.state.selectedStudentId)
+                  }
+                  className='deleteBtn'
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <header className='appHeader'>
           <h1>Student Grade Tracker</h1>
           <p>Class component design</p>
