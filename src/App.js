@@ -6,50 +6,6 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      students: [
-        {
-          id: 1,
-          name: 'John Doe',
-          subject: 'Mathematics',
-          grade: 92,
-          passed: true,
-        },
-        {
-          id: 2,
-          name: 'Alice Smith',
-          subject: 'Physics',
-          grade: 48,
-          passed: false,
-        },
-        {
-          id: 3,
-          name: 'David Johnson',
-          subject: 'Chemistry',
-          grade: 76,
-          passed: true,
-        },
-        {
-          id: 4,
-          name: 'Neem Khond',
-          subject: 'Chemistry',
-          grade: 76,
-          passed: true,
-        },
-        {
-          id: 5,
-          name: 'Nilesh Prasad',
-          subject: 'Chemistry',
-          grade: 76,
-          passed: true,
-        },
-        {
-          id: 6,
-          name: 'Rohit Sahurkar',
-          subject: 'Physics',
-          grade: 76,
-          passed: true,
-        },
-      ],
       newStudent: {
         name: '',
         subject: '',
@@ -120,10 +76,14 @@ class App extends React.Component {
     })
   }
 
-  renderStudentList() {
-    const filteredStudents = this.state.students.filter((student) =>
-      student.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()),
-    )
+  renderStudentList(filteredStudents) {
+    if (this.state.students.length === 0) {
+      return (
+        <div className='noStudents'>
+          <p>No students found. Add Student</p>
+        </div>
+      )
+    }
 
     if (filteredStudents.length === 0) {
       return (
@@ -169,6 +129,9 @@ class App extends React.Component {
   }
 
   render() {
+    const filteredStudents = this.state.students.filter((student) =>
+      student.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()),
+    )
     return (
       <div className='App'>
         <header className='appHeader'>
@@ -180,7 +143,7 @@ class App extends React.Component {
           <section className='studentSection'>
             <div className='sSHeader'>
               <h2 className='studentList'>
-                Student List ( {this.state.students.length})
+                Student List ({filteredStudents.length})
               </h2>
               <div className='searchContainer'>
                 <input
@@ -191,7 +154,9 @@ class App extends React.Component {
                 />
               </div>
             </div>
-            <div className='studentsGrid'>{this.renderStudentList()}</div>
+            <div className='studentsGrid'>
+              {this.renderStudentList(filteredStudents)}
+            </div>
           </section>
 
           <section className='addStudentSection'>
