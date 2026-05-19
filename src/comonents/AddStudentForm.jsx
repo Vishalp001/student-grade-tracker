@@ -1,13 +1,22 @@
 import React, { Component } from 'react'
-
+import { IoClose } from 'react-icons/io5'
 export default class AddStudentForm extends Component {
   render() {
-    const { newStudent, handleInputChange, handleOnSubmit } = this.props
+    const {
+      newStudent,
+      handleInputChange,
+      handleStudentModal,
+      handleOnSubmit,
+    } = this.props
+
     return (
       <div className='modalOverlay'>
         <div className='modal'>
           <section className='addStudentSection'>
             <h2>Add New Student</h2>
+            <h2 onClick={handleStudentModal} className='closeIcon'>
+              <IoClose />
+            </h2>
             <form
               action=''
               onSubmit={handleOnSubmit}

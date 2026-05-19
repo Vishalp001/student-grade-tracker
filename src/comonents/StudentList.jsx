@@ -5,7 +5,7 @@ export default class StudentList extends Component {
     const {
       filteredStudents,
       searchTerm,
-      openStudentModal,
+      handleStudentModal,
       handleSearchInput,
     } = this.props
 
@@ -24,7 +24,7 @@ export default class StudentList extends Component {
                 onChange={handleSearchInput}
               />
             </div>
-            <p onClick={openStudentModal} className='addStudentBtn'>
+            <p onClick={handleStudentModal} className='addStudentBtn'>
               Add Student
             </p>
           </div>

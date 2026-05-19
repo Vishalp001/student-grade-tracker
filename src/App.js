@@ -117,9 +117,9 @@ class App extends React.Component {
     })
   }
 
-  openStudentModal = () => {
+  handleStudentModal = () => {
     this.setState({
-      isStudentModalOpen: true,
+      isStudentModalOpen: !this.state.isStudentModalOpen,
     })
   }
 
@@ -141,7 +141,11 @@ class App extends React.Component {
     }
 
     return filteredStudents?.map((student) => (
-      <StudentCard student={student} openDeleteModal={this.openDeleteModal} />
+      <StudentCard
+        key={student.id}
+        student={student}
+        openDeleteModal={this.openDeleteModal}
+      />
     ))
   }
 
@@ -156,6 +160,7 @@ class App extends React.Component {
             selectedStudentId={this.state.selectedStudentId}
             handleDeleteStudent={this.handleDeleteStudent}
             closeDeleteModal={this.closeDeleteModal}
+            isDeleteModalOpen={this.state.isDeleteModalOpen}
           />
         )}
         <header className='appHeader'>
@@ -168,7 +173,7 @@ class App extends React.Component {
             searchTerm={this.state.searchTerm}
             filteredStudents={filteredStudents}
             handleSearchInput={this.handleSearchInput}
-            openStudentModal={this.openStudentModal}
+            handleStudentModal={this.handleStudentModal}
           />
           <div className='studentsGrid'>
             {this.renderStudentList(filteredStudents)}
@@ -179,7 +184,7 @@ class App extends React.Component {
               newStudent={this.state.newStudent}
               handleOnSubmit={this.handleOnSubmit}
               handleInputChange={this.handleInputChange}
-              openStudentModal={this.openStudentModal}
+              handleStudentModal={this.handleStudentModal}
             />
           )}
         </div>
