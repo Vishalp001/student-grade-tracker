@@ -3,22 +3,18 @@ import { MdDelete } from 'react-icons/md'
 import { FaUserEdit } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
 export default class StudentCard extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      isEdit: false,
-    }
-  }
-
   render() {
-    const { student, openDeleteModal, handleEditInputChange } = this.props
+    const {
+      student,
+      openDeleteModal,
+      openEditMode,
+      handleEditInputChange,
+      editStudent,
+      handleOnEditSubmit,
+      editingStudentId,
+    } = this.props
 
-    const onEditGeade = (student) => {
-      this.setState({
-        isEdit: !this.state.isEdit,
-      })
-    }
+    const isEdit = editingStudentId === student.id
 
     return (
       <div
@@ -30,12 +26,17 @@ export default class StudentCard extends Component {
             <h3>{student.name}</h3>
             <div className='sIHRight'>
               <h3
-                onClick={() => onEditGeade()}
+                onClick={() => openEditMode(student)}
                 title='Edit Grade'
                 className='editIcon'
               >
-                {this.state.isEdit ? <IoClose color='red' /> : <FaUserEdit />}
+                {isEdit ? <IoClose color='red' /> : <FaUserEdit />}
               </h3>
+              {isEdit && (
+                <button onClick={() => handleOnEditSubmit(student.id)}>
+                  Save
+                </button>
+              )}
 
               <h3
                 title='Delete Student'
@@ -52,15 +53,15 @@ export default class StudentCard extends Component {
           </p>
           <p className='gradeInput'>
             <strong>Grade: </strong>
-            {this.state.isEdit ? (
+            {isEdit ? (
               <input
                 type='number'
-                // min='0'
-                // max='100'
+                min='0'
+                max='100'
                 name='grade'
                 placeholder='Add Gade'
-                value={student.grade}
-                onChange={(e) => handleEditInputChange(e, student.id)}
+                value={editStudent?.grade}
+                onChange={handleEditInputChange}
               />
             ) : (
               <>{student.grade}%</>

@@ -40,6 +40,12 @@ class App extends React.Component {
         subject: '',
         grade: '',
       },
+      editStudent: {
+        id: 0,
+        name: '',
+        subject: '',
+        grade: '',
+      },
       searchTerm: '',
       selectedStudentId: 0,
     }
@@ -123,6 +129,51 @@ class App extends React.Component {
     })
   }
 
+  handleEditInputChange = (e) => {
+    const { name, value } = e.target
+
+    this.setState({
+      editStudent: {
+        ...this.state.editStudent,
+        [name]: value,
+      },
+    })
+  }
+
+  openEditMode = (student) => {
+    this.setState({
+      editingStudentId: student.id,
+      editStudent: {
+        ...student,
+      },
+    })
+  }
+
+  handleOnEditSubmit = (id) => {
+    const updatedStudents = this.state.students.map((student) => {
+      if (student.id === id) {
+        return {
+          ...student,
+          grade: Number(this.state.editStudent.grade),
+          passed: Number(this.state.editStudent.grade) >= 60,
+        }
+      }
+
+      return student
+    })
+
+    this.setState({
+      students: updatedStudents,
+      editingStudentId: null,
+      editStudent: {
+        id: 0,
+        name: '',
+        subject: '',
+        grade: '',
+      },
+    })
+  }
+
   renderStudentList(filteredStudents) {
     if (this.state.students?.length === 0) {
       return (
@@ -142,8 +193,12 @@ class App extends React.Component {
 
     return filteredStudents?.map((student) => (
       <StudentCard
-        key={student.id}
         student={student}
+        editStudent={this.state.editStudent}
+        editingStudentId={this.state.editingStudentId}
+        openEditMode={this.openEditMode}
+        handleEditInputChange={this.handleEditInputChange}
+        handleOnEditSubmit={this.handleOnEditSubmit}
         openDeleteModal={this.openDeleteModal}
       />
     ))
