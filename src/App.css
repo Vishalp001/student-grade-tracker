@@ -110,11 +110,8 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  /* 
-   */
 }
 .gradeInput input {
-  /* width: 100%; */
   width: 100px;
   display: inline;
   overflow: auto;
@@ -127,7 +124,10 @@
   border: 2px solid #667eea;
   padding: 10px;
 }
-
+.gradeInput svg {
+  font-weight: bold;
+  cursor: pointer;
+}
 .studentCard.passed {
   border-left-color: #4caf50;
 }
@@ -140,7 +140,6 @@
   gap: 10px;
 }
 .studentInfo h3 {
-  margin: 0 0 1rem 0;
   color: #333;
   font-size: 1.3rem;
   font-size: 500;

@@ -2,12 +2,16 @@ import { Component } from 'react'
 import { MdDelete } from 'react-icons/md'
 import { FaUserEdit } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
+import { FaCheck } from 'react-icons/fa'
+import { Tooltip } from 'react-tooltip'
+
 export default class StudentCard extends Component {
   render() {
     const {
       student,
       openDeleteModal,
       openEditMode,
+      closeEditMode,
       handleEditInputChange,
       editStudent,
       handleOnEditSubmit,
@@ -21,25 +25,27 @@ export default class StudentCard extends Component {
         key={student.id}
         className={`studentCard ${student.passed ? 'passed' : 'failed'}`}
       >
+        <Tooltip id='my-tooltip' />
+
         <div className='studentInfo'>
           <div className='studentInfoHeader'>
             <h3>{student.name}</h3>
             <div className='sIHRight'>
-              <h3
-                onClick={() => openEditMode(student)}
-                title='Edit Grade'
-                className='editIcon'
-              >
-                {isEdit ? <IoClose color='red' /> : <FaUserEdit />}
+              <h3 title='Edit Grade' className='editIcon'>
+                {isEdit ? (
+                  <IoClose onClick={closeEditMode} color='red' />
+                ) : (
+                  <FaUserEdit
+                    onClick={() => openEditMode(student)}
+                    data-tooltip-id='my-tooltip'
+                    data-tooltip-content='Edit Student Grade'
+                  />
+                )}
               </h3>
-              {isEdit && (
-                <button onClick={() => handleOnEditSubmit(student.id)}>
-                  Save
-                </button>
-              )}
 
               <h3
-                title='Delete Student'
+                data-tooltip-id='my-tooltip'
+                data-tooltip-content='Delete Student'
                 className='deleteIcon'
                 onClick={() => openDeleteModal(student.id)}
               >
@@ -51,22 +57,33 @@ export default class StudentCard extends Component {
             <strong>Subject: </strong>
             {student.subject}
           </p>
-          <p className='gradeInput'>
+          <div className='gradeInput'>
             <strong>Grade: </strong>
             {isEdit ? (
-              <input
-                type='number'
-                min='0'
-                max='100'
-                name='grade'
-                placeholder='Add Gade'
-                value={editStudent?.grade}
-                onChange={handleEditInputChange}
-              />
+              <div>
+                <input
+                  type='number'
+                  min='0'
+                  max='100'
+                  name='grade'
+                  placeholder='Add Gade'
+                  value={editStudent?.grade}
+                  onChange={handleEditInputChange}
+                />
+              </div>
             ) : (
               <>{student.grade}%</>
             )}
-          </p>
+            {isEdit && (
+              <h3
+                data-tooltip-id='my-tooltip'
+                data-tooltip-content='Save Grade!'
+                onClick={() => handleOnEditSubmit(student.id)}
+              >
+                <FaCheck fontWeight={'bold'} color='green' />
+              </h3>
+            )}
+          </div>
         </div>
         <div className='studentStatus'>
           <span

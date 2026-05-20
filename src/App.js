@@ -61,40 +61,6 @@ class App extends React.Component {
     })
   }
 
-  handleOnSubmit = (event) => {
-    event.preventDefault()
-
-    const { name, subject, grade } = this.state.newStudent
-    if (!name || !subject || !grade) {
-      alert('Please fill in all details')
-      return
-    }
-
-    const gradeNumber = parseInt(grade, 10)
-    if (isNaN(gradeNumber) || gradeNumber < 0 || gradeNumber > 100) {
-      alert('Please enter the valid grade between 0 to 100')
-      return
-    }
-
-    const newStudent = {
-      id: Date.now(),
-      name: name.trim(),
-      subject: subject,
-      grade: gradeNumber,
-      passed: gradeNumber >= 60,
-    }
-
-    this.setState({
-      students: [...this.state.students, newStudent],
-      isStudentModalOpen: false,
-      newStudent: {
-        name: '',
-        subject: '',
-        grade: '',
-      },
-    })
-  }
-
   handleDeleteStudent = (id) => {
     const remainingStudent = this.state.students.filter(
       (student) => student.id !== id,
@@ -148,8 +114,56 @@ class App extends React.Component {
       },
     })
   }
+  closeEditMode = () => {
+    this.setState({
+      editingStudentId: 0,
+    })
+  }
+
+  handleOnSubmit = (event) => {
+    event.preventDefault()
+
+    const { name, subject, grade } = this.state.newStudent
+    if (!name || !subject || !grade) {
+      alert('Please fill in all details')
+      return
+    }
+
+    const gradeNumber = parseInt(grade, 10)
+    if (isNaN(gradeNumber) || gradeNumber < 0 || gradeNumber > 100) {
+      alert('Please enter the valid grade between 0 to 100')
+      return
+    }
+
+    const newStudent = {
+      id: Date.now(),
+      name: name.trim(),
+      subject: subject,
+      grade: gradeNumber,
+      passed: gradeNumber >= 60,
+    }
+
+    this.setState({
+      students: [...this.state.students, newStudent],
+      isStudentModalOpen: false,
+      newStudent: {
+        name: '',
+        subject: '',
+        grade: '',
+      },
+    })
+  }
 
   handleOnEditSubmit = (id) => {
+    if (
+      isNaN(this.state.editStudent.grade) ||
+      this.state.editStudent.grade < 0 ||
+      this.state.editStudent.grade > 100
+    ) {
+      alert('Please enter the valid grade between 0 to 100')
+      return
+    }
+
     const updatedStudents = this.state.students.map((student) => {
       if (student.id === id) {
         return {
@@ -193,10 +207,12 @@ class App extends React.Component {
 
     return filteredStudents?.map((student) => (
       <StudentCard
+        key={student.id}
         student={student}
         editStudent={this.state.editStudent}
         editingStudentId={this.state.editingStudentId}
         openEditMode={this.openEditMode}
+        closeEditMode={this.closeEditMode}
         handleEditInputChange={this.handleEditInputChange}
         handleOnEditSubmit={this.handleOnEditSubmit}
         openDeleteModal={this.openDeleteModal}
