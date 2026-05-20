@@ -33,7 +33,12 @@ export default class StudentCard extends Component {
             <div className='sIHRight'>
               <h3 title='Edit Grade' className='editIcon'>
                 {isEdit ? (
-                  <IoClose onClick={closeEditMode} color='red' />
+                  <IoClose
+                    data-tooltip-id='my-tooltip'
+                    data-tooltip-content='Cancel Edit'
+                    onClick={closeEditMode}
+                    color='red'
+                  />
                 ) : (
                   <FaUserEdit
                     onClick={() => openEditMode(student)}

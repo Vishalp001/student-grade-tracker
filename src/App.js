@@ -34,11 +34,40 @@ class App extends React.Component {
           grade: 76,
           passed: true,
         },
+        {
+          id: 4,
+          name: 'Emma Wilson',
+          subject: 'Biology',
+          grade: 81,
+          passed: true,
+        },
+        {
+          id: 5,
+          name: 'Michael Brown',
+          subject: 'English',
+          grade: 55,
+          passed: false,
+        },
+        {
+          id: 6,
+          name: 'Sophia Taylor',
+          subject: 'History',
+          grade: 67,
+          passed: true,
+        },
+        {
+          id: 7,
+          name: 'Daniel Anderson',
+          subject: 'Physics',
+          grade: 39,
+          passed: false,
+        },
       ],
       newStudent: {
         name: '',
         subject: '',
         grade: '',
+        passed: false,
       },
       editStudent: {
         id: 0,
@@ -47,7 +76,9 @@ class App extends React.Component {
         grade: '',
       },
       searchTerm: '',
+      searchSubject: '',
       selectedStudentId: 0,
+      filterStatus: 'all',
     }
   }
 
@@ -74,6 +105,12 @@ class App extends React.Component {
   handleSearchInput = (e) => {
     this.setState({
       searchTerm: e.target.value,
+    })
+  }
+
+  handleSubjectSearch = (e) => {
+    this.setState({
+      searchSubject: e.target.value,
     })
   }
 
@@ -188,6 +225,12 @@ class App extends React.Component {
     })
   }
 
+  handleClearSearch = () => {
+    this.setState({
+      searchTerm: '',
+    })
+  }
+
   renderStudentList(filteredStudents) {
     if (this.state.students?.length === 0) {
       return (
@@ -220,10 +263,27 @@ class App extends React.Component {
     ))
   }
 
+  handleFilterChange = (status) => {
+    this.setState({
+      filterStatus: status,
+    })
+  }
+
   render() {
-    const filteredStudents = this.state.students?.filter((student) =>
-      student.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()),
-    )
+    const filteredStudents = this.state.students?.filter((student) => {
+      const matchesName = student?.name
+        ?.toLowerCase()
+        .includes(this.state.searchTerm.toLowerCase())
+      const matchesSubject = student?.subject
+        ?.toLowerCase()
+        .includes(this.state.searchSubject.toLowerCase())
+      const matchesStatus =
+        this.state.filterStatus === 'all' ||
+        (this.state.filterStatus === 'passed' && student.passed) ||
+        (this.state.filterStatus === 'failed' && !student.passed)
+
+      return matchesName && matchesSubject && matchesStatus
+    })
     return (
       <div className='App'>
         {this.state.isDeleteModalOpen && (
@@ -242,9 +302,14 @@ class App extends React.Component {
         <div className='appMain'>
           <StudentList
             searchTerm={this.state.searchTerm}
+            searchSubject={this.state.searchSubject}
             filteredStudents={filteredStudents}
             handleSearchInput={this.handleSearchInput}
             handleStudentModal={this.handleStudentModal}
+            handleSubjectSearch={this.handleSubjectSearch}
+            handleClearSearch={this.handleClearSearch}
+            filterStatus={this.state.filterStatus}
+            handleFilterChange={this.handleFilterChange}
           />
           <div className='studentsGrid'>
             {this.renderStudentList(filteredStudents)}
