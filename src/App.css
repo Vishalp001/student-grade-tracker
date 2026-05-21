@@ -39,7 +39,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
 }
 .filterButtons {
   display: flex;
@@ -48,7 +48,8 @@
   flex-wrap: wrap;
 }
 
-.filterButtons button {
+.filterButtons button,
+.addStudentBtn {
   padding: 10px 18px;
   border: none;
   border-radius: 8px;
@@ -79,7 +80,7 @@
   height: 40px;
   background: #fff;
   border: 2px solid #667eea;
-  padding: 10px;
+  padding: 0px 20px;
 }
 .selectContainer select {
   width: 100%;
@@ -89,7 +90,7 @@
   outline: 0;
 }
 .addStudentBtn {
-  border-bottom: 2px solid #667eea;
+  border: 2px solid #667eea;
   cursor: pointer;
 }
 .searchContainer {
@@ -101,7 +102,7 @@
   height: 40px;
   background: #fff;
   border: 2px solid #667eea;
-  padding: 20px;
+  padding: 0 20px;
 }
 .searchContainer input {
   width: 100%;
@@ -209,8 +210,12 @@
 .studentInfo strong {
   color: #333;
 }
+.gradeContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .studentStatus {
-  margin-top: 1rem;
   text-align: center;
 }
 .status {

@@ -62,40 +62,43 @@ export default class StudentCard extends Component {
             <strong>Subject: </strong>
             {student.subject}
           </p>
-          <div className='gradeInput'>
-            <strong>Grade: </strong>
-            {isEdit ? (
-              <div>
-                <input
-                  type='number'
-                  min='0'
-                  max='100'
-                  name='grade'
-                  placeholder='Add Gade'
-                  value={editStudent?.grade}
-                  onChange={handleEditInputChange}
-                />
-              </div>
-            ) : (
-              <>{student.grade}%</>
-            )}
-            {isEdit && (
-              <h3
-                data-tooltip-id='my-tooltip'
-                data-tooltip-content='Save Grade!'
-                onClick={() => handleOnEditSubmit(student.id)}
+          <div className='gradeContainer'>
+            <div className='gradeInput'>
+              <strong>Grade: </strong>
+              {isEdit ? (
+                <div>
+                  <input
+                    type='number'
+                    min='0'
+                    max='100'
+                    name='grade'
+                    placeholder='Add Gade'
+                    value={editStudent?.grade}
+                    onChange={handleEditInputChange}
+                  />
+                </div>
+              ) : (
+                <>{student.grade}%</>
+              )}
+              {isEdit && (
+                <h3
+                  data-tooltip-id='my-tooltip'
+                  data-tooltip-content='Save Grade!'
+                  onClick={() => handleOnEditSubmit(student.id)}
+                >
+                  <FaCheck fontWeight={'bold'} color='green' />
+                </h3>
+              )}
+            </div>
+
+            <div className='studentStatus'>
+              <span
+                className={`status ${student.passed ? 'statusPassed' : 'statusFailed'}`}
               >
-                <FaCheck fontWeight={'bold'} color='green' />
-              </h3>
-            )}
+                {student.passed ? 'PASSED' : 'FAILED'}
+              </span>
+            </div>
           </div>
-        </div>
-        <div className='studentStatus'>
-          <span
-            className={`status ${student.passed ? 'statusPassed' : 'statusFailed'}`}
-          >
-            {student.passed ? 'PASSED' : 'FAILED'}
-          </span>
         </div>
       </div>
     )

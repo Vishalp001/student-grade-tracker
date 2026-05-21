@@ -87,7 +87,7 @@ class App extends React.Component {
     this.setState({
       newStudent: {
         ...this.state.newStudent,
-        [name]: value,
+        [name]: value.replace(/^\s+/, ''),
       },
     })
   }

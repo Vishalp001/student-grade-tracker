@@ -87,9 +87,9 @@ export default class StudentList extends Component {
                 />
               )}
             </div>
-            <p onClick={handleStudentModal} className='addStudentBtn'>
+            <button onClick={handleStudentModal} className='addStudentBtn'>
               Add Student
-            </p>
+            </button>
           </div>
         </div>
       </section>
